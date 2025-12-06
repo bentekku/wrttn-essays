@@ -7,6 +7,18 @@ interface EssayListProps {
 }
 
 const EssayList = ({ essays }: EssayListProps) => {
+  // 1. Create a sortable copy of the essays array
+  const sortedEssays = essays
+    .slice() // Creates a shallow copy to avoid mutating the prop
+    .sort((a, b) => {
+      // Convert the string dates (e.g., "November 28, 2024") to Date objects for comparison
+      const dateA = new Date(a.date);
+      const dateB = new Date(b.date);
+
+      // Sort in descending order (newest date first: dateB - dateA)
+      return dateB.getTime() - dateA.getTime();
+    });
+
   return (
     <div className="max-w-2xl mx-auto px-6 py-20">
       <div className="mb-20 text-center">
@@ -17,13 +29,14 @@ const EssayList = ({ essays }: EssayListProps) => {
           </h2>
         </div>
         <p className="text-neutral-600 max-w-xl mx-auto mt-6 italic">
-          Reflections on the intersection of making, thinking, and living
-          deliberately.
+          Crude, imperfect attempts at thinking clearly, aimed at mastering the
+          art of the analytical essay.
         </p>
       </div>
 
       <div className="space-y-12">
-        {essays.map((essay) => (
+        {/* 2. Map over the sorted array */}
+        {sortedEssays.map((essay) => (
           // Link component wraps EssayCard for navigation
           <Link
             key={essay.id}
