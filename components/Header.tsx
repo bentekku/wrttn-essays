@@ -32,14 +32,14 @@ const Header = () => {
             className="absolute left-1/2 -translate-x-1/2 flex flex-col items-center cursor-pointer hover:opacity-80 transition-opacity"
           >
             <div className="flex items-center gap-3 mb-1">
-              <div className="w-8 h-[1px] bg-gradient-to-r from-transparent to-neutral-300"></div>
+              <div className="w-8 h-px bg-linear-to-r from-transparent to-neutral-300"></div>
               <h1
-                className="text-neutral-900 italic tracking-wide"
+                className="text-neutral-900 italic tracking-wide m-0"
                 style={{ fontSize: "24px", fontWeight: 400 }}
               >
                 Shadab Khan
               </h1>
-              <div className="w-8 h-[1px] bg-gradient-to-l from-transparent to-neutral-300"></div>
+              <div className="w-8 h-px bg-linear-to-l from-transparent to-neutral-300"></div>
             </div>
             <div className="flex items-center gap-1">
               <div className="w-1 h-1 rounded-full bg-neutral-400"></div>

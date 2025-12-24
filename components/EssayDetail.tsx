@@ -1,6 +1,8 @@
 import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
 import { Essay } from "@/libs/types";
+import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
 
 interface EssayDetailProps {
   essay: Essay;
@@ -9,7 +11,6 @@ interface EssayDetailProps {
 const EssayDetail = ({ essay }: EssayDetailProps) => {
   return (
     <article className="max-w-2xl mx-auto px-6 py-16">
-      {/* 1. Next.js Change: Replace button/onClick with Link to route back to the list */}
       <Link
         href="/"
         className="flex items-center gap-2 text-neutral-600 hover:text-neutral-900 transition-colors mb-12 group"
@@ -19,7 +20,6 @@ const EssayDetail = ({ essay }: EssayDetailProps) => {
       </Link>
 
       <header className="mb-12">
-        {/* Decorative line */}
         <div className="flex items-center mb-8">
           <div className="h-[1px] w-12 bg-gradient-to-r from-transparent to-neutral-300"></div>
           <div className="w-1.5 h-1.5 rounded-full bg-neutral-400 mx-3"></div>
@@ -40,7 +40,6 @@ const EssayDetail = ({ essay }: EssayDetailProps) => {
         </div>
 
         <h1 className="text-neutral-900 mb-6 text-4xl font-extrabold tracking-tight">
-          {/* Added text size class for proper heading hierarchy */}
           {essay.title}
         </h1>
 
@@ -56,14 +55,19 @@ const EssayDetail = ({ essay }: EssayDetailProps) => {
         </div>
       </header>
 
-      {/* The main content area */}
-      <div className="prose prose-neutral max-w-none">
-        {essay.content.split("\n\n").map((paragraph, index) => (
-          // Using <p> within prose for standard markdown paragraph formatting
-          <p key={index} className="text-neutral-800 mb-6 leading-relaxed">
-            {paragraph}
-          </p>
-        ))}
+      {/* REPLACED: Manual mapping with ReactMarkdown.
+          The 'prose' classes come from @tailwindcss/typography 
+          to style the rendered HTML.
+      */}
+      <div
+        className="prose prose-neutral prose-lg max-w-none 
+                prose-headings:font-serif prose-headings:font-bold prose-headings:text-neutral-900
+                prose-p:text-neutral-800 prose-p:leading-relaxed
+                prose-blockquote:border-l-neutral-400 prose-blockquote:italic prose-blockquote:text-neutral-700 prose-blockquote:bg-neutral-100/50 prose-blockquote:py-1 prose-blockquote:pr-4"
+      >
+        <ReactMarkdown remarkPlugins={[remarkGfm]}>
+          {essay.content}
+        </ReactMarkdown>
       </div>
 
       <footer className="mt-16 pt-8 border-t border-neutral-200">
@@ -75,4 +79,5 @@ const EssayDetail = ({ essay }: EssayDetailProps) => {
     </article>
   );
 };
+
 export default EssayDetail;

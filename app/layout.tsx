@@ -20,7 +20,7 @@ const RootLayout = ({
     <html lang="en">
       <body className={`antialiased min-h-screen bg-neutral-50`}>
         <Header />
-        <main>{children}</main>
+        <main className="flex-grow">{children}</main>
         <Footer />
       </body>
     </html>
