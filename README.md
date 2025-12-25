@@ -101,7 +101,7 @@ Routing
 4. Restart the development server (npm run dev) if the changes aren't immediately visible.
 
 ## Possible feature updates
-- Incorporation of 'slug' for url redirection
+- ~~Incorporation of 'slug' for url redirection~~
 - Tag specific search
 - Dark mode
 - RSS Feed + Newsletter? (quite optimistic, right?)
