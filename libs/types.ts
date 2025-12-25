@@ -1,6 +1,5 @@
-// The structure of a single essay object from your JSON data
 export type Essay = {
-  id: number;
+  id: string; // This will now be the filename (e.g., 'sharpening-the-axe')
   title: string;
   date: string;
   readTime: string;

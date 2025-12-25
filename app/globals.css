@@ -78,4 +78,38 @@
   time {
     @apply text-[0.9375rem] tracking-wide;
   }
+
+  /* 1. Make the HR invisible and take up no space */
+  .prose hr {
+    visibility: hidden;
+    height: 0;
+    margin: 0;
+    border: none;
+    padding: 0;
+    overflow: hidden;
+  }
+
+  /* 2. Target the disclaimer paragraphs */
+  .prose hr ~ p {
+    font-size: 0.875rem;
+    color: #737373;
+    font-style: italic;
+    line-height: 1.6;
+  }
+
+  /* 3. Add the spacing back ONLY before the first disclaimer paragraph */
+  .prose hr + p {
+    margin-top: 4rem; /* Adjust this for the gap you want */
+    position: relative;
+  }
+
+  /* Optional: Add a subtle 'finisher' symbol instead of a line */
+  .prose hr + p::before {
+    content: "•••";
+    display: block;
+    text-align: center;
+    color: #e5e5e5;
+    margin-bottom: 2rem;
+    font-style: normal;
+  }
 }
