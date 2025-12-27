@@ -9,17 +9,52 @@ The core goal of this project is to provide a structured environment for:
 * **Skill Brushing:** Improving clarity, grammar, and expressive ability through consistent practice.
 * **UPSC Preparation:** Serving as a dedicated repository for essays that build the necessary analytical rigor and eloquence for the Mains essay paper.
 
-This application is built with the **Next.js App Router** and uses **Server Components** for efficient data fetching from local JSON files.
+This application is built with the **Next.js App Router** and uses **Server Components** for efficient data fetching from Markdown files.
 
 ---
 
 ## 🛠️ Tech Stack
 
-* **Framework:** Next.js 14+ (App Router)
+* **Framework:** Next.js 16+ (App Router)
 * **Language:** TypeScript
 * **Styling:** Tailwind CSS (for rapid utility-first styling)
+* **Icons:** lucide-react (ArrowUp, Download, ArrowLeft)
+* **Markdown Parsing:** react-markdown with remark-gfm
+* **Metadata Extraction:** gray-matter
 * **Font:** Google Font & Next/Font (Lora & Inter)
-* **Data Source:** Local JSON (`data/essays.json`)
+* **Data Source:** Markdown files in `/content` directory
+
+---
+
+## ✨ Features
+
+### 1. **Scroll-to-Top Button**
+- Appears when user scrolls down more than 300px on essay pages
+- Smooth scroll animation to the top
+- Fixed position button (bottom-right corner)
+- Mobile-responsive sizing (smaller on mobile, larger on desktop)
+- Uses `ArrowUp` icon from lucide-react
+
+### 2. **PDF Preview & Download**
+- Download icon button in essay detail header (top-right)
+- Shows tooltip: "Preview hand-written pdf" on hover
+- Automatically detects if PDF exists for the essay
+- Button is hidden if PDF is not available
+- Opens PDF in a new tab when clicked
+- PDFs are stored in `/public/pdfs/{essayId}.pdf`
+
+### 3. **Mobile-Responsive Design**
+- Responsive header navigation (gap reduces on mobile)
+- Adaptive font sizes across all components
+- Reduced padding/spacing on mobile devices for optimal viewing
+- Touch-friendly button sizes
+- Optimized EssayCard and EssayDetail layouts for small screens
+
+### 4. **Smart Word Count Calculation**
+- Excludes disclaimer section from word count calculations
+- Removes Markdown syntax before counting words
+- More accurate reading time estimation (based on 200 WPM)
+- Generates excerpt from actual essay content only
 
 ---
 
@@ -44,13 +79,22 @@ npm install # or yarn install
 ```
 ### 3. Data Setup
 
-The application reads essay content from a local JSON file using Server Components (`fs` and `path` modules).
+The application reads essay content from **Markdown files** in the `/content` directory with YAML front matter:
 
-* File Path: `data/essays.json`
+```markdown
+---
+title: "Your Essay Title"
+date: "December 27, 2025"
+tags: ["Tag1", "Tag2"]
+---
 
-* Structure: Ensure your essays are listed in the correct format within this file (see `data/essays.json`).
+## Your essay content here...
+```
 
-The application dynamically calculates word count and read time (at 200 WPM) using the utility in libs/utils.ts.
+**To enable PDF download feature:**
+1. Place PDF files in `/public/pdfs/` directory
+2. Name them matching the essay filename (e.g., `the-years-teach-much-which-the-days-never-know.pdf`)
+3. The download button automatically appears if a matching PDF exists
 
 ### 4. Running the Development Server
 
@@ -66,42 +110,135 @@ Open http://localhost:3000 in your browser to see the result.
 The project adheres to the Next.js App Router conventions:
 | Path | Description |
 |:-----|:-------|
-|`app/page.tsx`|The primary **Essay Page List** (Server Component). Fetches and sorts data.|
-|`app/essays/[id]/page.tsx`|The **Dynamic Essay Detail Page** (Server Component). Fetches a single essay based on the URL parameter (`params.id`).|
+|`app/page.tsx`|The primary **Essay List Page** (Server Component). Fetches and sorts essays by date.|
+|`app/essays/[id]/page.tsx`|The **Dynamic Essay Detail Page** (Server Component). Displays individual essays with scroll-to-top & PDF features.|
 |`app/[about]/page.tsx`|The **About Page** component.|
-|`components/`|Reusable UI components (`Header`, `Footer`, `EssayList`, `EssayCard`, `EssayDetail`).|
-|`libs/utils.ts`|Contains the core logic for calculating word count and read time.|
-|`data/essays.json`|The local data source for all essays.|
+|`components/Header.tsx`|Navigation header with responsive design.|
+|`components/Footer.tsx`|Footer with social links.|
+|`components/EssayList.tsx`|Lists all essays in chronological order.|
+|`components/EssayCard.tsx`|Card component for each essay preview.|
+|`components/EssayDetail.tsx`|Full essay view with PDF download button (Client Component).|
+|`components/ScrollToTop.tsx`|Scroll-to-top button component (Client Component).|
+|`libs/utils.ts`|Utility functions for calculating word count, read time, and excerpt.|
+|`libs/types.ts`|TypeScript type definitions.|
+|`libs/essays.ts`|Server-side functions for fetching essay data from Markdown files.|
+|`content/`|Directory containing essay Markdown files.|
+|`public/pdfs/`|Directory for essay PDF files (optional).|
 
 ## 💡 Key Implementation Details
-### Data Handling
 
-* Server-Side Data Fetching: Data retrieval from `data/essays.json` happens directly within the Server Components.
+### Data Handling & Metrics
 
-* Dynamic Metrics: Essay word count and estimated read time are calculated at the time of data fetch using the utility in `libs/utils.ts`.
+* **Markdown-Based Content:** Stored in `/content` directory with YAML front matter
+* **Server-Side Processing:** Uses `fs`, `path`, and `gray-matter` library for data fetching
+* **Smart Calculations:** Word count excludes disclaimer sections and Markdown syntax, read time based on 200 WPM, excerpts extracted from cleaned content
 
-* Sorting: Essays are sorted by date (newest first) in `components/EssayList.tsx` for presentation.
+### Features Implementation
 
-Routing
+**Scroll-to-Top Button (`components/ScrollToTop.tsx`):**
+- Client Component with scroll event listener
+- Conditional rendering based on scroll position (> 300px)
+- Smooth scroll animation using `window.scrollTo()`
+- Mobile-responsive with responsive padding and icon sizing
 
-* Root Route: `/` renders the sorted essay list.
+**PDF Download Button (`components/EssayDetail.tsx`):**
+- Async PDF existence check using HEAD request on component mount
+- Conditional rendering (only shows if PDF exists)
+- Opens PDF in new tab on click
+- Uses tooltip for UX clarity
 
-* Dynamic Route: `/essays/1` (and subsequent IDs) is handled by the folder structure `app/essays/[id]/page.tsx`.
+**Mobile Responsiveness:**
+- Tailwind breakpoints (`md:`) for responsive design
+- Adaptive padding, margins, and font sizes
 
-* Navigation: All client-side navigation is handled via the `next/link` component.
+### Routing
+
+* **Root Route:** `/` renders the sorted essay list
+* **Dynamic Route:** `/essays/{essayId}` displays individual essays
+* **Navigation:** All client-side navigation uses Next.js `Link` component
+* **Static Generation:** Essay pages are pre-rendered at build time using `generateStaticParams()`
+
+---
 
 ## 📝 Adding New Essays
 
-1. Open data/essays.json.
+### Step-by-Step Guide:
 
-2. Add a new essay object, ensuring the id, title, date (e.g., "December 6, 2025"), tags, and content fields are filled out.
+1. **Create a Markdown file** in the `content/` directory with a descriptive filename (use kebab-case):
+   ```
+   content/your-essay-title.md
+   ```
+   
+   **Tip:** Need help generating slugs for your filenames? Check out [slug-mkr](https://github.com/bentekku/slug-mkr) - a utility tool for converting titles into URL-friendly slugs!
 
-3. The readTime, wordCount, and excerpt fields will be automatically calculated by the server-side logic based on your content.
+2. **Add YAML front matter** at the top of the file with metadata:
+   ```markdown
+   ---
+   title: "Your Essay Title"
+   date: "December 27, 2025"
+   tags: ["Tag1", "Tag2", "Tag3"]
+   ---
+   ```
 
-4. Restart the development server (npm run dev) if the changes aren't immediately visible.
+3. **Write your essay content** in Markdown format below the front matter
 
-## Possible feature updates
-- ~~Incorporation of 'slug' for url redirection~~
-- Tag specific search
-- Dark mode
-- RSS Feed + Newsletter? (quite optimistic, right?)
+4. **Add a disclaimer** at the end of the essay (optional but recommended):
+   ```markdown
+   ---
+   **Disclaimer:** [Your disclaimer text here]
+   ```
+
+5. **Optional: Add a PDF** to `/public/pdfs/your-essay-title.pdf` for the download feature
+   
+   **Note:** Use the same slug for both the `.md` and `.pdf` filenames for consistency!
+
+6. **Rebuild the project** (if in development, the changes will hot-reload):
+   ```bash
+   npm run build
+   ```
+
+### Automatic Calculations:
+
+Once you add an essay file, the following are automatically calculated:
+- ✅ **Word Count:** Counted from content (excluding disclaimer)
+- ✅ **Read Time:** Calculated at 200 WPM
+- ✅ **Excerpt:** First 160 characters of cleaned content
+- ✅ **Route:** `/essays/{filename-without-extension}`
+
+---
+
+## 🚀 Deployment
+
+This project is ready for deployment on **Vercel**, **Netlify**, or any Node.js-compatible hosting platform.
+
+### Deploy on Vercel (Recommended):
+
+1. Push your changes to GitHub
+2. Go to [Vercel](https://vercel.com/)
+3. Import the repository
+4. Click "Deploy"
+
+Vercel will automatically:
+- Build the project
+- Optimize images and assets
+- Deploy to a global CDN
+
+---
+
+## 📄 License
+
+This project is open source and available under the MIT License.
+
+---
+
+## 🙏 Acknowledgments
+
+- Built with [Next.js](https://nextjs.org/)
+- Styled with [Tailwind CSS](https://tailwindcss.com/)
+- Icons from [lucide-react](https://lucide.dev/)
+- Markdown parsing with [react-markdown](https://github.com/remarkjs/react-markdown)
+- Metadata extraction with [gray-matter](https://github.com/jonschlinkert/gray-matter)
+
+---
+
+**Happy writing! 📝✨**
