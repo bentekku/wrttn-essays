@@ -34,8 +34,8 @@ const Header = () => {
             <div className="flex items-center gap-3 mb-1">
               <div className="w-8 h-px bg-linear-to-r from-transparent to-neutral-300"></div>
               <h1
-                className="text-neutral-900 italic tracking-wide m-0"
-                style={{ fontSize: "24px", fontWeight: 400 }}
+                className="text-neutral-900 italic tracking-wide m-0 text-lg md:text-2xl"
+                style={{ fontWeight: 400 }}
               >
                 Shadab Khan
               </h1>
@@ -48,14 +48,14 @@ const Header = () => {
             </div>
           </Link>
 
-          <nav className="flex items-center gap-8">
+          <nav className="flex items-center gap-4 md:gap-8">
             {/* Essays Link */}
             <Link
               href={ESSAYS_PATH} // 3. Use Link for navigation
               className="group flex flex-col items-center gap-1"
             >
               <span
-                className={`text-sm tracking-wide transition-colors ${
+                className={`text-xs md:text-sm tracking-wide transition-colors ${
                   isActive(ESSAYS_PATH) // 4. Active state logic
                     ? "text-neutral-900"
                     : "text-neutral-600 group-hover:text-neutral-900"
@@ -64,7 +64,7 @@ const Header = () => {
                 Essays
               </span>
               <div
-                className={`h-[1px] bg-neutral-900 transition-all duration-300 ${
+                className={`h-px bg-neutral-900 transition-all duration-300 ${
                   isActive(ESSAYS_PATH) ? "w-full" : "w-0 group-hover:w-full" // 4. Active state logic
                 }`}
               ></div>
@@ -85,7 +85,7 @@ const Header = () => {
                 About
               </span>
               <div
-                className={`h-[1px] bg-neutral-900 transition-all duration-300 ${
+                className={`h-px bg-neutral-900 transition-all duration-300 ${
                   isActive(ABOUT_PATH) ? "w-full" : "w-0 group-hover:w-full" // 4. Active state logic
                 }`}
               ></div>

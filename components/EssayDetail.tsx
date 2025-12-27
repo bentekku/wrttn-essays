@@ -1,29 +1,67 @@
+"use client";
+
 import Link from "next/link";
-import { ArrowLeft } from "lucide-react";
+import { ArrowLeft, Download } from "lucide-react";
 import { Essay } from "@/libs/types";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
+import { useState, useEffect } from "react";
 
 interface EssayDetailProps {
   essay: Essay;
 }
 
 const EssayDetail = ({ essay }: EssayDetailProps) => {
-  return (
-    <article className="max-w-2xl mx-auto px-6 py-16">
-      <Link
-        href="/"
-        className="flex items-center gap-2 text-neutral-600 hover:text-neutral-900 transition-colors mb-12 group"
-      >
-        <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
-        <span>Back to essays</span>
-      </Link>
+  const [pdfExists, setPdfExists] = useState(false);
 
-      <header className="mb-12">
-        <div className="flex items-center mb-8">
-          <div className="h-[1px] w-12 bg-gradient-to-r from-transparent to-neutral-300"></div>
+  // Check if PDF exists for this essay
+  useEffect(() => {
+    const checkPdfExists = async () => {
+      try {
+        const response = await fetch(`/pdfs/${essay.id}.pdf`, {
+          method: "HEAD",
+        });
+        setPdfExists(response.ok);
+      } catch (error) {
+        setPdfExists(false);
+      }
+    };
+
+    checkPdfExists();
+  }, [essay.id]);
+
+  const handlePdfDownload = () => {
+    window.open(`/pdfs/${essay.id}.pdf`, "_blank");
+  };
+
+  return (
+    <article className="max-w-2xl mx-auto px-6 py-8 md:py-16">
+      <div className="flex items-center gap-4 mb-8 md:mb-12">
+        <Link
+          href="/"
+          className="flex items-center gap-2 text-neutral-600 hover:text-neutral-900 transition-colors group"
+        >
+          <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
+          <span>Back to essays</span>
+        </Link>
+
+        {pdfExists && (
+          <button
+            onClick={handlePdfDownload}
+            title="Preview hand-written pdf"
+            aria-label="Download essay PDF"
+            className="ml-auto p-2 text-neutral-600 hover:text-neutral-900 transition-colors rounded-md hover:bg-neutral-100"
+          >
+            <Download className="w-5 h-5" />
+          </button>
+        )}
+      </div>
+
+      <header className="mb-8 md:mb-12">
+        <div className="flex items-center mb-6 md:mb-8">
+          <div className="h-px w-12 bg-linear-to-r from-transparent to-neutral-300"></div>
           <div className="w-1.5 h-1.5 rounded-full bg-neutral-400 mx-3"></div>
-          <div className="h-[1px] flex-1 bg-neutral-200"></div>
+          <div className="h-px flex-1 bg-neutral-200"></div>
         </div>
 
         <div className="flex items-center gap-3 mb-6">
@@ -39,7 +77,7 @@ const EssayDetail = ({ essay }: EssayDetailProps) => {
           </span>
         </div>
 
-        <h1 className="text-neutral-900 mb-6 text-4xl font-extrabold tracking-tight">
+        <h1 className="text-neutral-900 mb-4 md:mb-6 text-2xl md:text-4xl font-extrabold tracking-tight">
           {essay.title}
         </h1>
 

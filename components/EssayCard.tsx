@@ -26,12 +26,14 @@ const EssayCard = ({ essay }: EssayCardProps) => {
         </span>
       </div>
 
-      <h3 className="text-neutral-900 mb-4 group-hover:text-neutral-600 transition-colors relative inline-block text-2xl font-semibold">
+      <h3 className="text-neutral-900 mb-3 md:mb-4 group-hover:text-neutral-600 transition-colors relative inline-block text-xl md:text-2xl font-semibold">
         {essay.title}
         <span className="absolute -bottom-1 left-0 w-0 group-hover:w-full h-[1px] bg-neutral-400 transition-all duration-300"></span>
       </h3>
 
-      <p className="text-neutral-700 mb-6 leading-relaxed">{essay.excerpt}</p>
+      <p className="text-neutral-700 mb-4 md:mb-6 leading-relaxed text-sm md:text-base">
+        {essay.excerpt}
+      </p>
 
       <div className="flex flex-wrap gap-2">
         {essay.tags.map((tag) => (

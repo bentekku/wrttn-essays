@@ -1,5 +1,6 @@
 import { notFound } from "next/navigation";
 import EssayDetail from "@/components/EssayDetail";
+import ScrollToTop from "@/components/ScrollToTop";
 import { getAllEssays, getEssayById } from "@/libs/essays";
 
 /**
@@ -32,6 +33,7 @@ const EssayPage = async (props: { params: Promise<{ id: string }> }) => {
   return (
     <div className="py-12">
       <EssayDetail essay={essay} />
+      <ScrollToTop />
     </div>
   );
 };

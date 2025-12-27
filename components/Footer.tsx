@@ -25,9 +25,9 @@ const Footer = () => {
       <div className="max-w-2xl mx-auto px-6">
         {/* ... (Decorative lines and Author name) ... */}
         <div className="flex items-center justify-center mb-8">
-          <div className="h-[1px] w-16 bg-gradient-to-r from-transparent to-neutral-300"></div>
+          <div className="h-px w-16 bg-linear-to-r from-transparent to-neutral-300"></div>
           <div className="w-1.5 h-1.5 rounded-full bg-neutral-400 mx-3"></div>
-          <div className="h-[1px] w-16 bg-gradient-to-l from-transparent to-neutral-300"></div>
+          <div className="h-px w-16 bg-linear-to-l from-transparent to-neutral-300"></div>
         </div>
 
         <div className="text-center mb-6">

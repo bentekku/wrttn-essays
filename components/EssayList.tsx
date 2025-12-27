@@ -34,7 +34,7 @@ const EssayList = ({ essays }: EssayListProps) => {
         </p>
       </div>
 
-      <div className="space-y-12">
+      <div className="space-y-8 md:space-y-12">
         {/* 2. Map over the sorted array */}
         {sortedEssays.map((essay) => (
           // Link component wraps EssayCard for navigation

@@ -19,14 +19,26 @@ const stripMarkdown = (content: string): string => {
 };
 
 /**
+ * Removes the disclaimer section from essay content.
+ * The disclaimer typically starts with "---" followed by "**Disclaimer:**"
+ */
+const removeDisclaimer = (content: string): string => {
+  // Match the disclaimer section that starts with "---" followed by disclaimer text
+  return content.split(/^---\s*\n\*\*Disclaimer:\*\*/m)[0].trim();
+};
+
+/**
  * Calculates word count, estimated read time, and a short excerpt for content.
  * Average reading speed is generally accepted as 200 words per minute (WPM).
  * @param content The full text content of the essay.
  * @returns An object with calculated metrics.
  */
 export const calculateMetrics = (content: string) => {
+  // Remove disclaimer before processing
+  const contentWithoutDisclaimer = removeDisclaimer(content);
+
   // Use clean text for the word count and excerpt to avoid counting symbols
-  const cleanText = stripMarkdown(content);
+  const cleanText = stripMarkdown(contentWithoutDisclaimer);
 
   // Use a regex to split the string by any whitespace character
   const words = cleanText.split(/\s+/).filter(Boolean);
