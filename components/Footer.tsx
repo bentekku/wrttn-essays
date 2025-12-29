@@ -1,12 +1,18 @@
 // FIX: Utilising another icon pack which is a fork of lucide-react called 'feather-icons-react'
 
 import { Github, Linkedin, Twitter } from "feather-icons-react";
-import { Mail } from "lucide-react";
+import { Mail, Rss } from "lucide-react";
 import Link from "next/link";
 
 const Footer = () => {
   const socialLinks = [
     // { icon: Twitter, label: "Twitter", href: "https://x.com" },
+    {
+      icon: Rss,
+      label: "RSS Feed",
+      href: "/api/feed.xml",
+      isExternal: true,
+    },
     {
       icon: Github,
       label: "GitHub",
@@ -39,7 +45,8 @@ const Footer = () => {
           {socialLinks.map((link) => {
             const Icon = link.icon;
             const isExternal =
-              !link.href.startsWith("mailto:") && !link.href.startsWith("/");
+              link.isExternal ||
+              (!link.href.startsWith("mailto:") && !link.href.startsWith("/"));
 
             return isExternal ? (
               <a

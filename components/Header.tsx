@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation"; // 2. Hook for active link logic
 import { useState } from "react";
+import { Rss } from "lucide-react";
 
 const Header = () => {
   // Get the current path (e.g., '/', '/about')
@@ -92,6 +93,17 @@ const Header = () => {
                 }`}
               ></div>
             </Link>
+
+            {/* RSS Feed Link */}
+            <a
+              href="/api/feed.xml"
+              aria-label="RSS Feed"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group opacity-50 hover:opacity-100 transition-opacity duration-300"
+            >
+              <Rss size={20} strokeWidth={1.5} className="text-neutral-900" />
+            </a>
           </nav>
 
           {/* Hamburger menu icon for mobile */}
@@ -171,6 +183,22 @@ const Header = () => {
                 }`}
               ></div>
             </Link>
+
+            {/* RSS Feed Link */}
+            <a
+              href="/api/feed.xml"
+              aria-label="RSS Feed"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group flex flex-col items-center gap-1"
+              onClick={() => setIsMenuOpen(false)}
+            >
+              <span className="text-sm tracking-wide text-neutral-600 group-hover:text-neutral-900 transition-colors flex items-center gap-2">
+                <Rss size={16} strokeWidth={1.5} />
+                RSS Feed
+              </span>
+              <div className="h-px bg-neutral-900 transition-all duration-300 w-0 group-hover:w-full"></div>
+            </a>
           </nav>
         )}
       </div>

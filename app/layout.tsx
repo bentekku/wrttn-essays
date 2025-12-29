@@ -9,6 +9,11 @@ export const metadata: Metadata = {
   icons: "/favicon.ico",
   description:
     "Personally written essays, crude, imperfect, and potential grammatically wrong. On my way to develop analysing, thinking and written skills- aimming to understand more about myself and the magnificient world.",
+  alternates: {
+    types: {
+      "application/rss+xml": "/api/feed.xml",
+    },
+  },
 };
 
 const RootLayout = ({
