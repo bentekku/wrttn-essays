@@ -228,7 +228,7 @@ Vercel will automatically:
 ### To-do list:
 - ~~"Scroll to top" on the bottom right of the page~~
 - ~~Add option to preview and download pdf of the essay written on papers if available~~
-- RSS feed feature
+- ~~RSS feed feature~~
 - Theme switching ?? (not sure on this one, might add it for accessibility)
 - More accessibility features (text-to-speech for the essay?)
 

@@ -7,7 +7,10 @@ tags: ["Life", "Reflection"]
 ---
 
 ### The Sharpness of the Axe
-Once Abraham Lincoln said, _"Give me six hours to chop down a tree and I will spend the first four sharpening the axe"_. Often an underestimated statement. We human-beings are severely drowned in the ocean of _instant gratification_ rather than focusing on the larger picture.
+Once **Abraham Lincoln** said: 
+>_Give me six hours to chop down a tree and I will spend the first four sharpening the axe_.
+
+Often an underestimated statement. We human-beings are severely drowned in the ocean of _instant gratification_ rather than focusing on the larger picture.
 
 This in turn leads to poor choices and eventually unfavourable outcomes. Taking instant gratification into account, many of us are often _doom-scrolling_ on social-media, gliding through all the short-form content hosted on platforms like _YouTube Shorts_, _Instagram Reels_ and many more, which are tuned to retain attention of the users making use of contrasting and colourful palette, incorporating fancy animations, motion graphics and sound effects. Hours and hours are wasted by simply scrolling. 
 
