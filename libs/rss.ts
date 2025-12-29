@@ -12,7 +12,7 @@ export function generateRSSFeed(essays: Essay[]): string {
     description: SITE_DESCRIPTION,
     feed_url: `${SITE_URL}/api/feed.xml`,
     site_url: SITE_URL,
-    author: AUTHOR_NAME,
+    managingEditor: AUTHOR_NAME, // 'author' -> "managingEditor" in RSS spec (global author)
     language: "en",
     pubDate: new Date(),
   });
