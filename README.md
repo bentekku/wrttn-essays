@@ -248,6 +248,7 @@ This project is open source and available under the MIT License.
 - Icons from [lucide-react](https://lucide.dev/)
 - Markdown parsing with [react-markdown](https://github.com/remarkjs/react-markdown)
 - Metadata extraction with [gray-matter](https://github.com/jonschlinkert/gray-matter)
+- RSS Feed with [rss](https://github.com/dylang/node-rss)
 
 ---
 
